@@ -1,7 +1,7 @@
 {
-  "name": "mblock",
+  "name": "mblock-mbx",
   "version": "3.0.0",
-  "description": "microBlock IDE (offline version)",
+  "description": "Microblock IDE (MBX Edition) - offline version",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -23,7 +23,7 @@
     "check-dependencies": "1.1.0",
     "electron": "9.2.0",
     "electron-builder": "22.9.1",
-    "electron-rebuild": "2.3.5"
+    "electron-rebuild": "^2.3.5"
   },
   "dependencies": {
     "bcrypt": "5.0.0",
@@ -33,15 +33,24 @@
     "serialport": "9.0.1"
   },
   "build": {
-    "appId": "com.microblock.app",
-    "productName": "microBlock IDE",
+    "appId": "com.microblock.mbx",
+    "productName": "Microblock IDE (MBX Edition)",
     "asar": false,
-    "files":[
+    "files": [
       "!Arduino/*"
     ],
     "win": {
-      "target": "msi",
-      "icon": "build/favicon.ico"
+      "target": "nsis",
+      "icon": "build/favicon.ico",
+      "artifactName": "Microblock-IDE-MBX-Edition-Setup-${version}-x64.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Microblock IDE (MBX Edition)"
     },
     "mac": {
       "category": "public.app-category.developer-tools",

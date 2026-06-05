@@ -4,6 +4,10 @@ var ipcMain = require('electron').ipcMain;
 
 app.allowRendererProcessReuse = false;
 
+// app.setPath('userData', path.join(__dirname, 'userData'));
+// process.env.MBLOCK_BOARDS = path.join(__dirname, 'microBlock-IDE', 'boards');
+// process.env.MBLOCK_ROOT = path.join(__dirname, 'microBlock-IDE');
+
 global.sharedObj = {
     argv: process.argv,
     mainWin: null,
