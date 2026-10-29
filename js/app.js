@@ -857,25 +857,32 @@ if (isElectron) {
     autoConnectCheck();
 
     // Update Check
+    // MBX edition: check the latest release of the MBX repository
+    // (the installed app also downloads it by itself, see main.js)
     checkUpdate = async () => {
-        let lastPackageFile = await fetch("https://api.github.com/repos/microBlock-IDE/microBlock-IDE-offline/contents/package.json");
-        if (lastPackageFile.status !== 200) {
-            console.error("Get package.json fail");
+        let res;
+        try {
+            res = await fetch("https://api.github.com/repos/MBXRobotics/microblock-ide-mbx-edition-version/releases/latest");
+        } catch (e) {
+            console.log("Update check skipped (offline?)");
             return;
         }
-
-        lastPackageFile = await lastPackageFile.json();
-        lastPackageFile = Base64.decode(lastPackageFile.content);
-        lastPackageFile = JSON.parse(lastPackageFile);
-        if (typeof lastPackageFile.version !== "undefined") {
-            if (lastPackageFile.version !== pjson.version) {
-                console.log("microBlock IDE offline have new version", lastPackageFile.version, pjson.version);
-                NotifyI("microBlock IDE offline have new version");
-            } else {
-                console.log("microBlock IDE offline now is last version", lastPackageFile.version, pjson.version);
-            }
+        if (res.status !== 200) {
+            console.log("No MBX release found", res.status);
+            return;
+        }
+        const latest = String((await res.json()).tag_name || "").replace(/^v/, "");
+        const toNum = v => v.split(".").map(n => parseInt(n, 10) || 0);
+        const a = toNum(latest), b = toNum(String(pjson.version));
+        let newer = false;
+        for (let i = 0; i < 3; i++) {
+            if ((a[i] || 0) !== (b[i] || 0)) { newer = (a[i] || 0) > (b[i] || 0); break; }
+        }
+        if (newer) {
+            console.log("MBX Edition has a new version", latest, pjson.version);
+            NotifyI(`New MBX Edition version ${latest} is available`);
         } else {
-            console.error("package.json error", lastPackageFile);
+            console.log("MBX Edition is up to date", pjson.version);
         }
     }
 
