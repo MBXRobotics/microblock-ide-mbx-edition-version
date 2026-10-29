@@ -7,8 +7,9 @@ const arduin_cli_name = {
 if (typeof path === "undefined") { // non electron handle
     path = null;
 }
-const isInstalledVersion = (sharedObj?.rootPath?.indexOf("\\AppData\\Local") > 0) || false;
-const USERDATA_PATH = (os?.platform() === "win32" && isInstalledVersion) ? remote?.app?.getPath('userData') : path?.normalize(sharedObj.rootPath + "/..");
+// Installed app (Windows: AppData\Local, macOS: inside the .app bundle) -> keep Arduino data in the user's app-data folder
+const isInstalledVersion = (sharedObj?.rootPath?.indexOf("\\AppData\\Local") > 0) || (sharedObj?.rootPath?.indexOf(".app/Contents/Resources") > 0) || false;
+const USERDATA_PATH = isInstalledVersion ? remote?.app?.getPath('userData') : path?.normalize(sharedObj.rootPath + "/..");
 
 const ARDUINO_HOME_PATH = isInstalledVersion ? USERDATA_PATH : path?.normalize(USERDATA_PATH + "/Arduino");
 const ARDUINO_DATA_PATH = ARDUINO_HOME_PATH;

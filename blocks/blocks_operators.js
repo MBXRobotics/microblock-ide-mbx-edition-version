@@ -9,7 +9,7 @@ Blockly.defineBlocksWithJsonArray([
     }],
     "output": "Number",
     "helpUrl": "%{BKY_MATH_NUMBER_HELPURL}",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "%{BKY_MATH_NUMBER_TOOLTIP}",
     "extensions": ["parent_tooltip_when_inline"]
   },
@@ -41,7 +41,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_MATH_ARITHMETIC_HELPURL}",
     "extensions": ["math_op_tooltip"]
   },
@@ -62,7 +62,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "%{BKY_MATH_RANDOM_INT_TOOLTIP}",
     "helpUrl": "%{BKY_MATH_RANDOM_INT_HELPURL}"
   },
@@ -93,7 +93,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_LOGIC_COMPARE_HELPURL}",
     "extensions": ["logic_compare", "logic_op_tooltip"]
   },
@@ -122,7 +122,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Boolean",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_LOGIC_OPERATION_HELPURL}",
     "extensions": ["logic_op_tooltip"]
   },
@@ -137,7 +137,7 @@ Blockly.defineBlocksWithJsonArray([
       }
     ],
     "output": "Boolean",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "%{BKY_LOGIC_NEGATE_TOOLTIP}",
     "helpUrl": "%{BKY_LOGIC_NEGATE_HELPURL}"
   },
@@ -164,7 +164,7 @@ Blockly.defineBlocksWithJsonArray([
       }
     ],
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_MATH_TRIG_HELPURL}",
     "extensions": ["math_op_tooltip"]
   },
@@ -188,7 +188,7 @@ Blockly.defineBlocksWithJsonArray([
       }
     ],
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_MATH_ROUND_HELPURL}",
     "tooltip": "%{BKY_MATH_ROUND_TOOLTIP}"
   },
@@ -201,7 +201,7 @@ Blockly.defineBlocksWithJsonArray([
       "text": ""
     }],
     "output": "String",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_TEXT_TEXT_HELPURL}",
     "tooltip": "%{BKY_TEXT_TEXT_TOOLTIP}",
     "extensions": [
@@ -213,7 +213,7 @@ Blockly.defineBlocksWithJsonArray([
     "type": "text_join",
     "message0": "",
     "output": "String",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "helpUrl": "%{BKY_TEXT_JOIN_HELPURL}",
     "tooltip": "%{BKY_TEXT_JOIN_TOOLTIP}",
     "mutator": "text_join_mutator"
@@ -223,7 +223,7 @@ Blockly.defineBlocksWithJsonArray([
     "message0": "random seed",
     "previousStatement": null,
     "nextStatement": null,
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "initialize the pseudo-random number generator",
     "helpUrl": ""
   },
@@ -244,7 +244,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "%{BKY_MATH_MODULO_TOOLTIP}",
     "helpUrl": "%{BKY_MATH_MODULO_HELPURL}"
   },
@@ -280,7 +280,7 @@ Blockly.defineBlocksWithJsonArray([
     ],
     "inputsInline": true,
     "output": "Number",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "",
     "helpUrl": ""
   },
@@ -298,7 +298,7 @@ Blockly.defineBlocksWithJsonArray([
       }
     ],
     "output": "Boolean",
-    "colour": "#34495E",
+    "colour": "#9400D3",
     "tooltip": "%{BKY_LOGIC_BOOLEAN_TOOLTIP}",
     "helpUrl": "%{BKY_LOGIC_BOOLEAN_HELPURL}"
   },

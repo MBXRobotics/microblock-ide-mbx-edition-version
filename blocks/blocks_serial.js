@@ -12,7 +12,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -32,7 +32,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -52,7 +52,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -69,7 +69,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -80,7 +80,7 @@ Blockly.defineBlocksWithJsonArray([
             "Number",
             "Boolean"
         ],
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -90,7 +90,7 @@ Blockly.defineBlocksWithJsonArray([
         "output": [
             "String"
         ],
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -98,7 +98,7 @@ Blockly.defineBlocksWithJsonArray([
         "type": "serial_read_number_float",
         "message0": "Serial read number (float)",
         "output": "Number",
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -106,7 +106,7 @@ Blockly.defineBlocksWithJsonArray([
         "type": "serial_read_number",
         "message0": "Serial read number",
         "output": "Number",
-        "colour": "#8E44AD",
+        "colour": "#002050",
         "tooltip": "",
         "helpUrl": ""
     }

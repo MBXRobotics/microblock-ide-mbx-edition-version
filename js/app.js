@@ -1,4 +1,4 @@
-let extensionList = [ ];
+let extensionList = [];
 let projectFilePath = null;
 let saveAsFlag = false;
 
@@ -7,15 +7,116 @@ var blocklyWorkspace;
 let updateBlockCategory = async () => {
     if (isEmbed) return;
 
-    var categoryIconList = [];
+    // ---------- helpers ----------
+    const slugify = (s) =>
+        String(s || "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w\-]/g, "")
+            .replace(/\-+/g, "-");
+
+    const hexToRgb = (hex) => {
+        if (!hex) return null;
+        let h = String(hex).trim();
+        if (h.startsWith("#")) h = h.slice(1);
+        if (h.length === 3) h = h.split("").map(ch => ch + ch).join("");
+        if (h.length !== 6) return null;
+        const n = parseInt(h, 16);
+        return {
+            r: (n >> 16) & 255,
+            g: (n >> 8) & 255,
+            b: n & 255
+        };
+    };
+
+    // amount: 0..1 (0 = original, 1 = white)
+    const lightenHex = (hex, amount = 0.80) => {
+        const rgb = hexToRgb(hex);
+        if (!rgb) return "";
+        const r = Math.round(rgb.r + (255 - rgb.r) * amount);
+        const g = Math.round(rgb.g + (255 - rgb.g) * amount);
+        const b = Math.round(rgb.b + (255 - rgb.b) * amount);
+        return `rgb(${r}, ${g}, ${b})`;
+    };
+
+    // Inject base style once (rounded rows + spacing)
+    if (!document.getElementById("mbx-toolbox-category-style")) {
+        const style = document.createElement("style");
+        style.id = "mbx-toolbox-category-style";
+        style.textContent = `
+ /* === CATEGORY CARD === */
+ .blocklyToolboxDiv .blocklyTreeRow {
+    border-radius: 0 !important;
+    margin: 8px 10px !important;
+    padding: 0 !important;
+
+    height: 120px;                 /* 🔥 บังคับความสูงตายตัว */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* === ICON CONTAINER === */
+.blocklyToolboxDiv .blocklyTreeIcon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100%;
+    height: 52px;                  /* 🔥 คุมพื้นที่ icon */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* === ICON IMAGE === */
+.blocklyToolboxDiv .blocklyTreeIcon img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    display: block;
+}
+
+/* === LABEL TEXT === */
+.blocklyToolboxDiv .blocklyTreeLabel {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100%;
+    height: 32px;                  /* 🔥 คุมพื้นที่ text */
+    margin: 3px 0 0 0 !important;
+    padding: 0 !important;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+}
+
+
+        `;
+        document.head.appendChild(style);
+    }
+
+    // ---------- Build Toolbox XML + Meta for styling ----------
+    let categoryIconList = [];
+    let categoryMetaList = []; // { name, slug, color, bg }
+
     let toolboxTextXML = `<xml xmlns="https://developers.google.com/blockly/xml">`;
 
     const board = boards.find(board => board?.id === boardId);
     const level = board?.level?.find(level => level.name === levelName);
     const toolboxTree = level?.blocks || blocksTree;
+
     // blockTree
     for (let category of toolboxTree) {
         toolboxTextXML += `<category name="${category.name}" colour="${category.color}"${typeof category.blocks === "string" ? ` custom="${category.blocks}"` : ''}>`;
+
         if (typeof category.blocks === "object") {
             for (let block of category.blocks) {
                 if (typeof block === "object") {
@@ -38,8 +139,23 @@ let updateBlockCategory = async () => {
                 toolboxTextXML += Blockly.Xml.domToText(xml);
             }
         }
+
         toolboxTextXML += `</category>`;
-        categoryIconList.push(category.icon.startsWith("/") ? rootPath + category.icon : `${rootPath}/boards/${boardId}/${category.icon}`);
+
+        // icon
+        categoryIconList.push(
+            category.icon.startsWith("/")
+                ? rootPath + category.icon
+                : `${rootPath}/boards/${boardId}/${category.icon}`
+        );
+
+        // meta (for background fill)
+        categoryMetaList.push({
+            name: category.name,
+            slug: slugify(category.name),
+            color: category.color || "#cccccc",
+            bg: lightenHex(category.color || "#cccccc", 0.78) // adjust strength here
+        });
     }
 
     // Extenstion
@@ -47,25 +163,44 @@ let updateBlockCategory = async () => {
     for (const extensionId of fs.ls("/extension")) {
         let extension = fs.read(`/extension/${extensionId}/extension.js`);
         extension = eval(extension);
-        if (board?.isArduinoPlatform && (!extension?.supportArduinoPlatform)) { // Skip if select board arduino but extension not support arduino
+
+        if (board?.isArduinoPlatform && (!extension?.supportArduinoPlatform)) {
             continue;
         }
+
         extenstionTree.push(extension);
         categoryIconList.push(fs.read(`/extension/${extensionId}/${extension.icon}`));
+
+        categoryMetaList.push({
+            name: extension.name,
+            slug: slugify(extension.name),
+            color: extension.color || "#cccccc",
+            bg: lightenHex(extension.color || "#cccccc", 0.78)
+        });
     }
+
     if (isElectron) {
         let extensionDir = sharedObj.extensionDir;
         for (const extensionId of nodeFS.ls(extensionDir)) {
             let extension = await readFileAsync(`${extensionDir}/${extensionId}/extension.js`);
             extension = extension.toString();
             extension = eval(extension);
+
             extenstionTree.push(extension);
             categoryIconList.push(`${extensionDir}/${extensionId}/${extension.icon}`);
+
+            categoryMetaList.push({
+                name: extension.name,
+                slug: slugify(extension.name),
+                color: extension.color || "#cccccc",
+                bg: lightenHex(extension.color || "#cccccc", 0.78)
+            });
         }
     }
 
     for (let category of extenstionTree) {
         toolboxTextXML += `<category name="${category.name}" colour="${category.color}"${typeof category.blocks === "string" ? ` custom="${category.blocks}"` : ''}>`;
+
         if (typeof category.blocks === "object") {
             for (let block of category.blocks) {
                 if (typeof block === "object") {
@@ -88,6 +223,7 @@ let updateBlockCategory = async () => {
                 toolboxTextXML += Blockly.Xml.domToText(xml);
             }
         }
+
         toolboxTextXML += `</category>`;
     }
 
@@ -95,17 +231,43 @@ let updateBlockCategory = async () => {
 
     let toolboxXML = Blockly.utils.xml.textToDom(toolboxTextXML);
 
+    // Update toolbox
     blocklyWorkspace.updateToolbox(toolboxXML);
-    /* blocklyWorkspace.scrollbar.resize(); */
 
-    for (const [index, element] of Object.entries($("span.blocklyTreeIcon"))) {
+    // ---------- Apply icons + background fill ----------
+    // 1) add icons (clear old to avoid duplicates)
+    const iconSpans = $("span.blocklyTreeIcon");
+    for (const [index, element] of Object.entries(iconSpans)) {
         if (typeof element === "object" && element.nodeType !== undefined) {
-            $(element).append(`<img src="${categoryIconList[index]}" alt="">`);
+            const url = categoryIconList[index];
+            if (!url) continue;
+            $(element).find("img").remove();
+            $(element).append(`<img src="${url}" alt="">`);
         }
     }
+
+    // 2) fill background color for each category row
+    // rows match order of categories shown in toolbox
+    const rows = $(".blocklyToolboxDiv .blocklyTreeRow");
+    rows.each((i, row) => {
+        const meta = categoryMetaList[i];
+        if (!meta) return;
+
+        // add class and data for future custom CSS
+        row.classList.add(`cat-${meta.slug}`);
+        row.setAttribute("data-cat", meta.slug);
+
+        // Fill background
+        row.style.backgroundColor = meta.bg;
+
+        // Optional: make label darker for readability
+        const label = row.querySelector(".blocklyTreeLabel");
+        if (label) label.style.color = "#1f2d3d";
+    });
 };
 
-Blockly.triggleResize = function(e) {
+
+Blockly.triggleResize = function (e) {
     // Compute the absolute coordinates and dimensions of blocklyArea.
     var element = blocklyArea;
     var x = 0;
@@ -142,7 +304,7 @@ if (isEmbed) {
         window.open(`https://ide.microblock.app/?open=${pageParams.get("open") || ""}`, "_blank");
     });
 
-    let allParams = { };
+    let allParams = {};
     for (let p of pageParams) {
         allParams[p[0]] = ((v) => {
             if (v.indexOf("%") > 0) return v;
@@ -167,13 +329,13 @@ var blocklyDiv = document.getElementById('blocklyDiv');
 blocklyWorkspace = Blockly.inject(blocklyDiv, {
     media: 'blockly/media/',
     toolbox: document.getElementById('toolbox'),
-    grid : {
-		spacing : 25, 
-		length : 1, 
-		colour : '#888', 
-		snap : true
+    grid: {
+        spacing: 25,
+        length: 1,
+        colour: '#888',
+        snap: true
     },
-    trashcan : true,
+    trashcan: true,
     zoom: {
         controls: true,
         wheel: (isEmbed && embedOption.blockOnly) ? false : true,
@@ -182,17 +344,17 @@ blocklyWorkspace = Blockly.inject(blocklyDiv, {
         minScale: 0.3,
         scaleSpeed: 1.2
     },
-    scrollbars : (isEmbed && embedOption.blockOnly) ? false : true,
-    comments : true, 
-	disable : true, 
-    maxBlocks : Infinity, 
-    rtl : false, 
-    oneBasedIndex : false, 
-    sounds : true, 
+    scrollbars: (isEmbed && embedOption.blockOnly) ? false : true,
+    comments: true,
+    disable: true,
+    maxBlocks: Infinity,
+    rtl: false,
+    oneBasedIndex: false,
+    sounds: true,
     readOnly: isEmbed,
 
     /* Option */
-    renderer: localStorage.getItem("renderer") || "geras",
+    renderer: localStorage.getItem("renderer") || "zelos",
 });
 
 window.addEventListener('resize', Blockly.triggleResize, false);
@@ -205,12 +367,12 @@ Blockly.dialog.setAlert((message, callback) => {
 
 /** Override Blockly.confirm() with custom implementation. */
 Blockly.dialog.setConfirm((message, callback) => {
-    Notiflix.Confirm.Show('Are you Confirm ?', message, 'Yes', 'No', function() {
+    Notiflix.Confirm.Show('Are you Confirm ?', message, 'Yes', 'No', function () {
         callback(true);
     },
-    function() {
-        callback(false);
-    });
+        function () {
+            callback(false);
+        });
 });
 
 Notiflix.Confirm.Init({
@@ -219,12 +381,12 @@ Notiflix.Confirm.Init({
 
 /** Override Blockly.prompt() with custom implementation. */
 Blockly.dialog.setPrompt((message, defaultValue, callback) => {
-    Notiflix.Confirm.Show("Prompt", `${message}<br><br><input type="text" id="prompt-input" value="${defaultValue}">`, 'OK', 'Cancle', function() {
+    Notiflix.Confirm.Show("Prompt", `${message}<br><br><input type="text" id="prompt-input" value="${defaultValue}">`, 'OK', 'Cancle', function () {
         callback($("#prompt-input").val());
     },
-    function() {
-        callback(null);
-    });
+        function () {
+            callback(null);
+        });
 });
 
 const selectRenderer = renderer => {
@@ -235,7 +397,7 @@ const selectRenderer = renderer => {
 if (isElectron) {
     nodeFS.walk = (dir) => {
         return new Promise((resolve, reject) => {
-            let files = [ ];
+            let files = [];
             dive(dir, (err, file) => {
                 files.push(file);
             }, () => {
@@ -268,7 +430,7 @@ const updateWorkspace = () => {
         const code = fs.read(`/${file_name_select}`);
         $("#mode-select-switch > li[data-value='2']").click();
         $(async () => {
-            while(!editor) {
+            while (!editor) {
                 await sleep(100);
             }
             editor.updateOptions({ readOnly: false });
@@ -280,7 +442,7 @@ const updateWorkspace = () => {
 /* Auto Save to localStorage */
 const updataWorkspaceAndCategoryFromvFS = async (disable_load_fs) => {
     if (!vFSTree) {
-        vFSTree = { };
+        vFSTree = {};
     }
 
     for (const extensionId of fs.ls("/extension")) {
@@ -325,7 +487,7 @@ const updataWorkspaceAndCategoryFromvFS = async (disable_load_fs) => {
     }
 
     updateBlockCategory();
-    
+
     if (disable_load_fs) {
         return;
     }
@@ -335,7 +497,7 @@ const updataWorkspaceAndCategoryFromvFS = async (disable_load_fs) => {
 
 let hotUpdate = async () => {
     if (!vFSTree) {
-        vFSTree = { };
+        vFSTree = {};
     }
     let configFileContent = fs.read("/config.json");
     if (configFileContent) {
@@ -369,7 +531,7 @@ let hotUpdate = async () => {
     } else if (useMode === "code") {
         $("#mode-select-switch > li[data-value='2']").click();
         $(async () => {
-            while(!editor) {
+            while (!editor) {
                 await sleep(100);
             }
             updateWorkspace();
@@ -390,7 +552,7 @@ if (isElectron) {
             if (nodeFS.existsSync(filePath)) {
                 vFSTree = JSON.parse(nodeFS.readFileSync(filePath));
                 loadCodeAlready = true;
-                sharedObj.argv = [ ];
+                sharedObj.argv = [];
             }
             break;
         }
@@ -403,7 +565,7 @@ if (isElectron) {
         (async (fileName) => {
             Notiflix.Block.Standard("body", 'Loading...');
 
-            let fileContent = await fetch(`https://us-central1-ublock-c0a08.cloudfunctions.net/share/files/${fileName}`, { 
+            let fileContent = await fetch(`https://us-central1-ublock-c0a08.cloudfunctions.net/share/files/${fileName}`, {
                 method: "get",
                 redirect: "follow"
             });
@@ -492,7 +654,7 @@ $("#save-project").click(async () => {
             let data = JSON.stringify(vFSTree);
             let blob = new Blob([data], { type: "application/json" });
             let url = window.URL.createObjectURL(blob);
-            
+
             let link = document.createElement("a");
             link.download = $("#project-name").val() + ".mby";
             link.href = url;
@@ -505,13 +667,13 @@ $("#save-project").click(async () => {
             let OpenFilePath = "";
             if ((!projectFilePath) || saveAsFlag) {
                 let result = await dialog.showSaveDialog({
-                    filters: [{ 
-                        name: 'microBlock IDE', 
-                        extensions: ['mby'] 
+                    filters: [{
+                        name: 'microBlock IDE',
+                        extensions: ['mby']
                     }],
                     defaultPath: $("#project-name").val() + ".mby"
                 });
-        
+
                 if (result.canceled) {
                     return;
                 }
@@ -552,7 +714,7 @@ let openProject = async (filePath) => {
         let input = document.createElement("input");
         input.type = "file";
         input.accept = ".mby";
-        input.addEventListener("change", function() {
+        input.addEventListener("change", function () {
             // console.log(this.files);
             let fileName = this.files[0].name.replace(".mby", "");
             let fr = new FileReader();
@@ -560,18 +722,18 @@ let openProject = async (filePath) => {
                 openProjectFromData(fr.result, fileName);
             };
             fr.readAsText(this.files[0]);
-        }, false); 
+        }, false);
         input.click();
     } else {
         let OpenFilePath = null;
         if (!filePath) {
             let result = await dialog.showOpenDialogSync({
                 properties: [
-                'openFile'
+                    'openFile'
                 ],
-                filters: [{ 
-                    name: 'microBlock IDE', 
-                    extensions: ['mby'] 
+                filters: [{
+                    name: 'microBlock IDE',
+                    extensions: ['mby']
                 }]
             });
 
@@ -583,7 +745,7 @@ let openProject = async (filePath) => {
         } else {
             OpenFilePath = filePath;
         }
-        
+
         nodeFS.readFile(OpenFilePath, async (err, data) => {
             if (err) {
                 NotifyE("Open project fail: " + err.toString());
@@ -609,7 +771,7 @@ $("#open-help").click(() => {
 });
 
 let imageSelectUpdate = (sel) => {
-    $(sel).find("li > div").click(function() {
+    $(sel).find("li > div").click(function () {
         $(sel).find("li > div").removeClass("active");
         $(this).addClass("active");
     });
@@ -626,7 +788,7 @@ let statusLog = text => {
     $("#text-status").text(`${text} at ${now.getHours()}:${(now.getMinutes() < 10 ? "0" : "")}${now.getMinutes()}:${(now.getSeconds() < 10 ? "0" : "")}${now.getSeconds()}`);
 };
 
-$(document).keydown(function(event) {
+$(document).keydown(function (event) {
     // console.log(event)
     if (event.ctrlKey) {
         let key = event.key;
@@ -648,7 +810,7 @@ $(document).keydown(function(event) {
         } else if (key === 'u') { // Ctrl + U -> Upload
             event.preventDefault();
             $("#upload-program").click();
-        } 
+        }
     }
 
     return true;
@@ -659,7 +821,7 @@ $("body")[0].addEventListener("drop", (e) => {
 
     if (e.dataTransfer.items.length > 0) {
         let fPath = e.dataTransfer.items[0].getAsFile().path;
-    
+
         // console.log(fPath);
         if (fPath.endsWith(".mby")) {
             openProject(fPath);

@@ -151,6 +151,7 @@ Blockly.defineBlocksWithJsonArray([
   "tooltip": "",
   "helpUrl": ""
 },
+
 {
   "type": "display_dot_hide",
   "message0": "display dot at %1 (x: %2 , y: %3) turn off",
@@ -175,4 +176,5 @@ Blockly.defineBlocksWithJsonArray([
   "tooltip": "",
   "helpUrl": ""
 }
+
 ]);

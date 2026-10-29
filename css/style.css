@@ -31,7 +31,7 @@ body {
     justify-content: center;
     text-align: center;
     z-index: 99999;
-    background-color: #FFF;
+    background-color: #0b21e6;
 }
 
 #full-loading > .box > img {
@@ -42,7 +42,7 @@ body {
 
 #full-loading > .box > .label {
     font-size: 36px;
-    color: #F1C40F;
+    color: #0add15;
     font-weight: bold;
 }
 
@@ -66,7 +66,7 @@ body {
 }
 
 .page > .main > header {
-    background-color: #F1C40F;
+    background-color: #f1c40f;
     box-shadow: 0 0 10px rgb(0 0 0 / 39%);
     z-index: 99;
     display: flex;
@@ -83,7 +83,7 @@ body {
 .header-logo {
     font-size: 24px;
     font-weight: bold;
-    color: #FFF;
+    color: #ffffff;
     padding: 20px 30px;
 }
 
@@ -95,7 +95,7 @@ body {
 ul.switch-mode {
     padding: 0;
     margin: 0;
-    background-color: #B7950B;
+    background-color: b7950b;
     border-radius: 100px;
     display: flex;
     flex-direction: row;
@@ -105,15 +105,15 @@ ul.switch-mode {
 ul.switch-mode > li {
     list-style: none;
     padding: 10px 16px;
-    color: #FFF;
+    color: #e60d0d;
     cursor: pointer;
     transition: background-color 300mS;
     border-radius: 100px;
 }
 
 ul.switch-mode > li.active {
-    background-color: #FFF;
-    color: #B7950B;
+    background-color: #dee2e2;
+    color: #92875b;
 }
 
 .embed ul.switch-mode {
@@ -153,13 +153,13 @@ ul.top-bar-button > li > button {
     color: #FFF;
     outline: none;
     border-radius: 500px;
-    background-color: #B7950B;
+    background-color: #a390a0;
     border: none;
     margin-right: 10px;
 }
 
 ul.top-bar-button > li > button:hover {
-    background-color: #9A7D0A;
+    background-color: #9b8e5a;
 }
 
 .embed ul.top-bar-button {
@@ -330,8 +330,8 @@ ul.switch-mode > li:last-child {
     font-size: 22px;
     margin-right: 14px;
     border: none;
-    background-color: #34495E;
-    color: #FFF;
+    background-color: #169982;
+    color: #080101;
 }
 
 .page > .main > footer > .control-box > ul.button-list > li > button > div {
@@ -425,7 +425,7 @@ ul.switch-mode > li:last-child {
     font-size: 12px;
     justify-content: space-between;
     color: #FFF;
-    background-color: #1C2833;
+    background-color: #030b79;
     align-items: center;
 }
 
@@ -1731,7 +1731,7 @@ ul.switch-mode > li:last-child {
 }
 
 #code-share-dialog  > section > header > .close-btn:hover {
-    color: #7F8C8D;
+    color: #7f838d;
 }
 
 #code-share-dialog .preview-block {
@@ -1915,8 +1915,8 @@ ul.switch-mode > li:last-child {
 
 /* Blockly hardover */
 .blocklyToolboxDiv {
-    background-color: #FDFEFE !important;
-    box-shadow: 0 0 10px rgb(0 0 0 / 39%);
+    background-color: #ECF0F1 !important;
+    box-shadow: 0 0 10px rgba(48, 8, 226, 0.39);
     width: 100px !important;
 }
 
@@ -1955,7 +1955,7 @@ ul.switch-mode > li:last-child {
     padding: 6px;
     padding-bottom: 10px;
     padding-top: 0;
-    color: #1C2833 !important;
+    color: #331c2f !important;
     font-size: 14px;
 }
 
@@ -2159,3 +2159,37 @@ ul.switch-mode > li:last-child {
     color: #CB4335;
     cursor: pointer;
 }
+
+/* Base style */
+.blocklyTreeRow {
+  border-radius: 10px;
+  margin: 6px;
+  padding: 10px 6px;
+  transition: background-color 0.2s;
+}
+
+/* Moving */
+.blocklyTreeRow.cat-moving {
+  background-color: #FADBD8; /* ฟ้า */
+}
+
+/* Display */
+.blocklyTreeRow.cat-display {
+  background-color: #D5F5E3; /* เขียว */
+}
+
+/* RGB LED */
+.blocklyTreeRow.cat-rgb-led {
+  background-color: #FADBD8; /* แดงอ่อน */
+}
+
+/* Gamepad */
+.blocklyTreeRow.cat-gamepad {
+  background-color: #E8DAEF; /* ม่วง */
+}
+
+/* IO */
+.blocklyTreeRow.cat-io {
+  background-color: #FCF3CF; /* เหลือง */
+}
+

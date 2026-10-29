@@ -12,7 +12,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -29,7 +29,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -46,7 +46,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -65,7 +65,7 @@ Blockly.defineBlocksWithJsonArray([
   }],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "%{BKY_CONTROLS_REPEAT_TOOLTIP}",
   "helpUrl": "%{BKY_CONTROLS_REPEAT_HELPURL}"
 },
@@ -88,7 +88,7 @@ Blockly.defineBlocksWithJsonArray([
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "helpUrl": "%{BKY_CONTROLS_IF_HELPURL}",
   "mutator": "controls_if_mutator",
   "extensions": ["controls_if_tooltip"]
@@ -109,7 +109,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -128,7 +128,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -157,7 +157,7 @@ Blockly.defineBlocksWithJsonArray([
   }],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "helpUrl": "%{BKY_CONTROLS_WHILEUNTIL_HELPURL}",
   "extensions": ["controls_whileUntil_tooltip"]
 },
@@ -197,7 +197,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "helpUrl": "%{BKY_CONTROLS_FOR_HELPURL}",
   "extensions": [
     "contextMenu_newGetVariableBlock",
@@ -224,7 +224,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -240,7 +240,7 @@ Blockly.defineBlocksWithJsonArray([
     ]
   }],
   "previousStatement": null,
-  "colour": "#D4AC0D",
+  "colour": "#00A4A6",
   "helpUrl": "%{BKY_CONTROLS_FLOW_STATEMENTS_HELPURL}",
   "extensions": [
     "controls_flow_tooltip",
@@ -252,11 +252,11 @@ Blockly.defineBlocksWithJsonArray([
 Blockly.Blocks['controls_on_start'] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("on start");
+      .appendField("On Start");
     this.appendStatementInput("block")
       .setCheck(null);
     this.setNextStatement(true, [ "controls_on_start", "controls_forever_no_connect" ]);
-    this.setColour("#D4AC0D");
+    this.setColour("#002050");
     this.setTooltip("");
     this.setHelpUrl("");
 
@@ -269,11 +269,11 @@ Blockly.Blocks['controls_on_start'] = {
 Blockly.Blocks['controls_forever_no_connect'] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("forever");
+      .appendField("Forever");
     this.appendStatementInput("block")
       .setCheck(null);
     this.setPreviousStatement(true, [ "controls_on_start", "controls_forever_no_connect" ]);
-    this.setColour("#D4AC0D");
+    this.setColour("#002050");
     this.setTooltip("");
     this.setHelpUrl("");
 

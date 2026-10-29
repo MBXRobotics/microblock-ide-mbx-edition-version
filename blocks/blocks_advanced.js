@@ -11,7 +11,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -55,7 +55,7 @@ Blockly.defineBlocksWithJsonArray([
   ],
   "inputsInline": true,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -71,7 +71,7 @@ Blockly.defineBlocksWithJsonArray([
   ],
   "inputsInline": true,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -122,7 +122,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": false,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -131,7 +131,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Hour",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -140,7 +140,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Min",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -149,7 +149,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Second",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -158,7 +158,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Day",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -167,7 +167,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Month",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -176,7 +176,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Year",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -185,7 +185,7 @@ Blockly.defineBlocksWithJsonArray([
   "message0": "RTC get Microsecond",
   "inputsInline": false,
   "output": "Number",
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -195,7 +195,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -212,7 +212,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "A lightsleep has full RAM and state retention. Upon wake execution is resumed from the point where the sleep was requested, with all subsystems operational.",
   "helpUrl": ""
 },
@@ -229,7 +229,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "A deepsleep may not retain RAM or any other state of the system (for example peripherals or network interfaces). Upon wake execution is resumed from the main script, similar to a hard or power-on reset.",
   "helpUrl": ""
 },
@@ -241,7 +241,7 @@ Blockly.defineBlocksWithJsonArray([
     "Number",
     "Boolean"
   ],
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -261,7 +261,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -271,7 +271,7 @@ Blockly.defineBlocksWithJsonArray([
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "Reset board and start program again (NOT recommend)",
   "helpUrl": ""
 },
@@ -289,7 +289,7 @@ Blockly.defineBlocksWithJsonArray([
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#8E44AD",
+  "colour": "#16A085",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -300,7 +300,7 @@ Blockly.Blocks['import'] = {
     this.appendDummyInput()
       .appendField('import')
       .appendField(new Blockly.FieldDropdown(this.generateOptions), 'file_name');
-    this.setColour("#8E44AD");
+    this.setColour("#16A085");
     this.setTooltip("");
     this.setHelpUrl("");
   },
@@ -315,7 +315,7 @@ Blockly.Blocks['call_import'] = {
     this.appendDummyInput()
       .appendField('call')
       .appendField(new Blockly.FieldDropdown(this.generateOptions), 'object');
-    this.setColour("#8E44AD");
+    this.setColour("#16A085");
     this.setTooltip("");
     this.setHelpUrl("");
 

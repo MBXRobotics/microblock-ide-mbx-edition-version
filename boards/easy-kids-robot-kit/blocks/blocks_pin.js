@@ -1,92 +1,75 @@
+/* global Blockly */
+
 Blockly.defineBlocksWithJsonArray([
 {
   "type": "pin_digital_write",
-  "message0": "digital write %1 to pin %2",
+  "message0": "digitalWrite %1 to pin %2",
   "args0": [
     {
       "type": "input_value",
       "name": "value",
-      "check": [
-        "Boolean",
-        "Number"
-      ]
+      "check": ["Boolean", "Number"]
     },
     {
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-        [ "D0", "26" ],
-        [ "D1", "13" ],
-        [ "D2", "14" ],
-        [ "D3", "15" ],
-        [ "D4", "27" ],
-        [ "D5", "32" ],
-        [ "D6", "33" ],
+        [ "D0", "12" ],   // GPIO12
+        [ "D1", "33" ]    // GPIO33
       ]
     }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#E74C3C",
-  "tooltip": "",
-  "helpUrl": ""
+  "colour": "#1f5053"
 },
+
 {
   "type": "pin_digital_read",
-  "message0": "digital read pin %1",
+  "message0": "digitalRead pin %1",
   "args0": [
     {
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-        [ "D0", "26" ],
-        [ "D1", "13" ],
-        [ "D2", "14" ],
-        [ "D3", "15" ],
-        [ "D4", "27" ],
-        [ "D5", "32" ],
-        [ "D6", "33" ],
+        [ "AD0 warning pin", "12" ],
+        [ "AD1", "33" ],
+        [ "AD2", "39" ],     
+        [ "AD3", "36" ]
       ]
     }
   ],
-  "output": [
-    "Number",
-    "Boolean"
-  ],
+  "output": ["Number", "Boolean"],
   "inputsInline": true,
-  "colour": "#E74C3C",
-  "tooltip": "",
-  "helpUrl": ""
+  "colour": "#1f5053"
 },
+
 {
   "type": "pin_analog_read",
-  "message0": "analog read pin %1",
+  "message0": "analogRead pin %1",
   "args0": [
     {
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-        [ "VR", "34" ],
-        [ "A0", "26" ],
-        [ "A1", "13" ],
-        [ "A2", "14" ],
-        [ "A3", "15" ],
-        [ "A4", "27" ],
-        [ "A5", "32" ],
-        [ "A6", "33" ],
+        [ "A0", "12" ],
+        [ "A1", "33" ],
+        [ "A2", "39" ],
+        [ "A3", "36" ], 
+        [ "VR", "35" ]
       ]
     }
   ],
   "output": "Number",
   "inputsInline": true,
-  "colour": "#E74C3C",
-  "tooltip": "Read analog value from pin Ax in range 0 - 4095",
-  "helpUrl": ""
+  "colour": "#1f5053",
+  "tooltip": "Read analog value from pin"
 },
+
 {
   "type": "pin_analog_write",
-  "message0": "PWM write %1 to pin %2",
+  "message0": "analogWritePWM %1 to pin %2",
   "args0": [
     {
       "type": "input_value",
@@ -97,60 +80,48 @@ Blockly.defineBlocksWithJsonArray([
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-        [ "D0", "26" ],
-        [ "D1", "13" ],
-        [ "D2", "14" ],
-        [ "D3", "15" ],
-        [ "D4", "27" ],
-        [ "D5", "32" ],
+        [ "D0", "12" ],
+        [ "D1", "33" ]
       ]
     }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#E74C3C",
-  "tooltip": "Write PWM value 0 to 1023 to any pin",
-  "helpUrl": ""
+  "colour": "#1f5053"
 },
-{
-  "type": "pin_pulse_in",
-  "message0": "reads a pulse %1 on a pin %2 timeout %3 uS (uS)",
-  "args0": [
-    {
-      "type": "field_dropdown",
-      "name": "value",
-      "options": [
-        [ "HIGH", "HIGH" ],
-        [ "LOW", "LOW" ],
-      ]
-    },
-    {
-      "type": "field_dropdown",
-      "name": "pin",
-      "options": [
-        [ "D0", "26" ],
-        [ "D1", "13" ],
-        [ "D2", "14" ],
-        [ "D3", "15" ],
-        [ "D4", "27" ],
-        [ "D5", "32" ],
-        [ "D6", "33" ],
-      ]
-    },
-    {
-      "type": "input_value",
-      "name": "timeout",
-      "check": "Number"
-    },
-  ],
-  "output": [
-    "Number",
-    "Boolean"
-  ],
-  "inputsInline": true,
-  "colour": "#E74C3C",
-  "tooltip": "",
-  "helpUrl": ""
-},
+
+// {
+//   "type": "pin_pulse_in",
+//   "message0": "reads a pulse %1 on a pin %2 timeout %3 uS",
+//   "args0": [
+//     {
+//       "type": "field_dropdown",
+//       "name": "value",
+//       "options": [
+//         [ "HIGH", "HIGH" ],
+//         [ "LOW", "LOW" ]
+//       ]
+//     },
+//     {
+//       "type": "field_dropdown",
+//       "name": "pin",
+//       "options": [
+//         [ "D0", "12" ],
+//         [ "D1", "33" ],
+//         [ "A2", "39" ],
+//         [ "A4", "36" ],
+//         [ "VR", "35" ]
+//       ]
+//     },
+//     {
+//       "type": "input_value",
+//       "name": "timeout",
+//       "check": "Number"
+//     }
+//   ],
+//   "output": ["Number", "Boolean"],
+//   "inputsInline": true,
+//   "colour": "#1f5053"
+// }
 ]);

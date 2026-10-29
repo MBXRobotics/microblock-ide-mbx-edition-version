@@ -10,9 +10,9 @@ Blockly.Events.disableOrphansCustom = function (event) {
             if (!workspace.isDragging()) {
                 let block_is_valid = false;
 
-                const valid_top_block = [ 
-                    "controls_on_start", 
-                    "controls_forever_no_connect", 
+                const valid_top_block = [
+                    "controls_on_start",
+                    "controls_forever_no_connect",
                     "procedures_defnoreturn",
                     "procedures_defreturn",
                     "procedures_mutatorcontainer",
@@ -44,31 +44,36 @@ Blockly.Events.disableOrphansCustom = function (event) {
             }
         }
     }
-};  
+};
 
 addBoard({
     id: "easy-kids-robot-kit",
-    name: "3in1 EASYKIDS BOARD",
+    name: "MBXRobotBoard",
     description: "",
-    image: "images/cover.jpg",
+    image: "images/mbx.jpeg",
     tags: [
         "ESP32",
-        "EasyKids Robotics",
+        "MBX",
         "Robot",
         "IoT"
     ],
     chip: "ESP32",
-    script: [ 
+    script: [
+
+        "../kidbright32/js/field_dotmatrix.js",
         "../kidbright32/js/field_note.js",
         "../kidbright32/js/sound.js",
         "js/field_bitmap_rgb.js",
+
     ],
     css: [
+        "../kidbright32/css/field_dotmatrix.css",
         "../kidbright32/css/field_note.css",
         "css/field_bitmap_rgb.css",
     ],
     blocks: [
-        "blocks/blocks_display.js",
+        "blocks/mbx_modules.js", // drivers as separate files (small main.py) - keep FIRST
+        "blocks/blocks_tft.js",
         "blocks/blocks_motor.js",
         "blocks/blocks_servo.js",
         "blocks/blocks_switch.js",
@@ -79,8 +84,10 @@ addBoard({
         "blocks/blocks_gamepad.js",
         "blocks/blocks_advanced.js",
         "blocks/blocks_color.js",
+        "blocks/blocks_display.js", // add display blocks
 
-        "blocks/generators_display.js",
+
+        "blocks/generators_tft.js",
         "blocks/generators_motor.js",
         "blocks/generators_servo.js",
         "../kidbright32/blocks/generators_switch.js",
@@ -89,26 +96,38 @@ addBoard({
         "blocks/generators_pin.js",
         "blocks/generators_rgbled.js",
         "blocks/generators_gamepad.js",
+        "blocks/generators_display.js",// add display generators
         "../kidbright32/blocks/generators_avanced.js",
+        "blocks/blocks_serial_uart.js",
+        "blocks/generators_serial_uart.js",
+
+        "blocks/block_style.js", // icons on blocks (EasyKids look) - keep LAST
     ],
-    modules: [ ],
+    examples: [
+        "UART",
+        {
+            name: "UART loopback test (wire A0 to A1)",
+            files: "examples/uart-loopback",
+        },
+    ],
+    modules: [],
     firmware: [
         {
             // name: "MicroPython (Gamepad) for EasyKids Robot Kit v1.2.0-dirty",
-            name: "EasyKids_JoyController",
-            path: "firmware/MicroPython.for.EasyKids.Robot.Kit.v1.2.0-dirty-2.bin",
+            name: "MBX_JoyController",
+            path: "firmware/MicroPython.for.MBX.Robot.Kit.v1.2.0-dirty-2.bin",
             version: "v1.2.0-dirty",
             date: "2023-09-15",
-            board: "EasyKids Robot Kit",
+            board: "MBX Robot Kit",
             cpu: "ESP32"
         },
         {
             // name: "MicroPython (No Gamepad) for EasyKids Robot Kit V1.9.1-5-g79adb87da-dirty",
-            name: "EasyKids_Standard",
-            path: "firmware/MicroPython.for.EasyKids.Robot.Kit.v1.2.0-dirty-3-no-bluepad.bin",
+            name: "MBX_Standard",
+            path: "firmware/MicroPython.for.MBX.Robot.Kit.v1.2.0-dirty-3-no-bluepad.bin",
             version: "v1.2.0-dirty",
             date: "2023-07-22",
-            board: "EasyKids Robot Kit",
+            board: "MBX Robot Kit",
             cpu: "ESP32"
         },
         /* {
@@ -126,7 +145,7 @@ addBoard({
             productId: "55D4"
         }
     ],
-    autoCompletion: { },
+    autoCompletion: {},
     defaultCode: `
         <xml>
             <block type="controls_on_start" x="0" y="0">
@@ -251,38 +270,6 @@ addBoard({
                         },
                         {
                             xml: `
-                                <block type="motor_slide_left">
-                                    <value name="speed">
-                                        <shadow type="math_number">
-                                            <field name="NUM">50</field>
-                                        </shadow>
-                                    </value>
-                                    <value name="time">
-                                        <shadow type="math_number">
-                                            <field name="NUM">1</field>
-                                        </shadow>
-                                    </value>
-                                </block>
-                            `
-                        },
-                        {
-                            xml: `
-                                <block type="motor_slide_right">
-                                    <value name="speed">
-                                        <shadow type="math_number">
-                                            <field name="NUM">50</field>
-                                        </shadow>
-                                    </value>
-                                    <value name="time">
-                                        <shadow type="math_number">
-                                            <field name="NUM">1</field>
-                                        </shadow>
-                                    </value>
-                                </block>
-                            `
-                        },
-                        {
-                            xml: `
                                 <block type="motor_move">
                                     <value name="speed">
                                         <shadow type="math_number">
@@ -320,17 +307,6 @@ addBoard({
                         },
                         "motor_stop",
                         {
-                            xml: `
-                                <block type="motor_set_pwm">
-                                    <value name="freq">
-                                        <shadow type="math_number">
-                                            <field name="NUM">50</field>
-                                        </shadow>
-                                    </value>
-                                </block>
-                            `
-                        },
-                        {
                             xml: '<label text="Servo"></label>',
                         },
                         {
@@ -346,6 +322,127 @@ addBoard({
                         },
                     ]
                 },
+
+                {
+                    name: "Matrix",
+                    icon: `../kidbright32/images/matrix.png`,
+                    color: "#e64c3c",
+                    blocks: [
+                        "display_custom", // matrix show [picture] - first
+                        {
+                            xml: `
+                                <block type="display_show">
+                                    <value name="value">
+                                        <shadow type="text">
+                                            <field name="TEXT">12</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        {
+                            xml: `
+                                <block type="display_scroll">
+                                    <value name="value">
+                                        <shadow type="text">
+                                            <field name="TEXT">Hello!</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        {
+                            xml: `
+                               <block type="display_firework">
+  <value name="speed">
+    <shadow type="math_number">
+      <field name="NUM">60</field>
+    </shadow>
+  </value>
+</block>
+
+                            `
+                        },
+                        {
+                            xml: `
+<block type="display_rainfall">
+  <value name="frames">
+    <shadow type="math_number">
+      <field name="NUM">80</field>
+    </shadow>
+  </value>
+  <value name="speed">
+    <shadow type="math_number">
+      <field name="NUM">60</field>
+    </shadow>
+  </value>
+</block>
+`
+                        },
+                          
+                        {
+                            xml: `
+                               <block type="display_dot_at">
+                               <value name="x"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+                              <value name="y"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+                             </block>
+                            `
+                        },
+
+                        "display_arrow",
+
+                        // ===== From KidBright32 Display =====
+                        {
+                            xml: `
+                                <block type="display_show4x8">
+                                    <value name="value">
+                                        <shadow type="math_number">
+                                            <field name="NUM">1234</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        {
+                            xml: `
+                                <block type="display_left_show">
+                                    <value name="value">
+                                        <shadow type="math_number">
+                                            <field name="NUM">12</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        {
+                            xml: `
+                                <block type="display_right_show">
+                                    <value name="value">
+                                        <shadow type="math_number">
+                                            <field name="NUM">12</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        {
+                            xml: `
+                                <block type="display_plot">
+                                    <value name="value">
+                                        <shadow type="math_number">
+                                            <field name="NUM">0</field>
+                                        </shadow>
+                                    </value>
+                                </block>
+                            `
+                        },
+                        // "matrix dot at (x, y) turn on/off" removed from the toolbox
+                        // (display_dot_show / display_dot_hide still work in old projects)
+
+                        "display_clear",
+                    ]
+                },
+                // add
                 {
                     name: "Display",
                     icon: `../ttgo-t-display/images/display.png`,
@@ -392,7 +489,7 @@ addBoard({
                                     </value>
                                     <value name="y">
                                         <shadow type="math_number">
-                                            <field name="NUM">0</field>
+                                            <field name="NUM">67</field>
                                         </shadow>
                                     </value>
                                 </block>
@@ -587,6 +684,8 @@ addBoard({
                                 </block>
                             `
                         },
+
+
                         /*{
                             xml: `
                                 <block type="colour_picker">
@@ -640,7 +739,7 @@ addBoard({
                         {
                             xml: '<label text="Sensor"></label>',
                         },
-                        "easy_kids_ultrasonic_read",
+                        "mbx_ultrasonic_read",
                         {
                             xml: '<label text="Switch"></label>',
                         },
@@ -749,19 +848,19 @@ addBoard({
                                 </block>
                             `
                         },
-                        {
-                            xml: `
-                                <block type="pin_pulse_in">
-                                    <field name="pin">26</field>
-                                    <field name="value">HIGH</field>
-                                    <value name="timeout">
-                                        <shadow type="math_number">
-                                            <field name="NUM">1000000</field>
-                                        </shadow>
-                                    </value>
-                                </block>
-                            `
-                        },
+                        // {
+                        //     xml: `
+                        //         <block type="pin_pulse_in">
+                        //             <field name="pin">26</field>
+                        //             <field name="value">HIGH</field>
+                        //             <value name="timeout">
+                        //                 <shadow type="math_number">
+                        //                     <field name="NUM">1000000</field>
+                        //                 </shadow>
+                        //             </value>
+                        //         </block>
+                        //     `
+                        // },
                     ]
                 },
                 {
@@ -1131,7 +1230,12 @@ addBoard({
                         "board_reset"
                     ]
                 }
+                // UART category removed from the toolbox (user request).
+                // UART blocks are still defined (blocks_serial_uart.js) so old projects open.
             ]
         }
     ]
 });
+
+
+

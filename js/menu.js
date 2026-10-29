@@ -2,27 +2,29 @@ if (isElectron) {
     const { Menu, MenuItem } = remote;
 
     Menu.setApplicationMenu(Menu.buildFromTemplate([
+        // macOS: first menu is the app-name menu (About, Hide, Quit)
+        ...(os.platform() === "darwin" ? [{ role: "appMenu" }] : []),
         {
             label: 'File',
             submenu: [
                 {
                     label: "New",
-                    accelerator: 'Ctrl+N',
+                    accelerator: 'CmdOrCtrl+N',
                     click: () => $("#new-project").click()
                 },
                 {
                     label: "Open",
-                    accelerator: 'Ctrl+O',
+                    accelerator: 'CmdOrCtrl+O',
                     click: () => $("#open-project").click()
                 },
                 {
                     label: "Save",
-                    accelerator: 'Ctrl+S',
+                    accelerator: 'CmdOrCtrl+S',
                     click: () => $("#save-project").click()
                 },
                 {
                     label: "Save As",
-                    accelerator: 'Ctrl+Shift+S',
+                    accelerator: 'CmdOrCtrl+Shift+S',
                     click: () => {
                         saveAsFlag = true;
                         $("#save-project").click();

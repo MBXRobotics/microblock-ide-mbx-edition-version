@@ -79,3 +79,8 @@ Blockly.Python['display_dot_hide'] = function(block) {
     var code = `display.dot(${value_x}, ${value_y}, False)\n`;
     return code;
 };
+Blockly.Python['display_custom'] = function(block) {
+  ensureMBXDotMatrixAPI();
+  const pattern = block.getFieldValue('value');
+  return `display_custom_pattern(${JSON.stringify(pattern)})\n`;
+};

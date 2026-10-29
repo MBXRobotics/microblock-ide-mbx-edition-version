@@ -12,10 +12,11 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
+
     {
         "type": "motor_backward",
         "message0": "move backward at power %1 %% for %2 secs",
@@ -29,7 +30,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -46,7 +47,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -63,7 +64,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -80,7 +81,7 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -97,44 +98,11 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
-    {
-        "type": "motor_slide_left",
-        "message0": "slide left at power %1 %% for %2 secs",
-        "args0": [{
-            "type": "input_value",
-            "name": "speed",
-        }, {
-            "type": "input_value",
-            "name": "time",
-        }],
-        "inputsInline": true,
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#205388",
-        "tooltip": "",
-        "helpUrl": ""
-    },
-    {
-        "type": "motor_slide_right",
-        "message0": "slide right at power %1 %% for %2 secs",
-        "args0": [{
-            "type": "input_value",
-            "name": "speed",
-        }, {
-            "type": "input_value",
-            "name": "time",
-        }],
-        "inputsInline": true,
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#205388",
-        "tooltip": "",
-        "helpUrl": ""
-    },
+
     {
         "type": "motor_move",
         "message0": "%1 at power %2 %%",
@@ -147,41 +115,38 @@ Blockly.defineBlocksWithJsonArray([
                 ["turn left", "motor.TURN_LEFT"],
                 ["turn right", "motor.TURN_RIGHT"],
                 ["spin left", "motor.SPIN_LEFT"],
-                ["spin right", "motor.SPIN_RIGHT"],
-                ["slide left", "motor.SLIDE_LEFT"],
-                ["slide right", "motor.SLIDE_RIGHT"]
+                ["spin right", "motor.SPIN_RIGHT"]
+         
             ]
         }, {
             "type": "input_value",
             "name": "speed",
+            "check": "Number"
         }],
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
     {
         "type": "motor_wheel",
-        "message0": "M1 at power %1 %%, M2 at power %2 %%, M3 at power %3 %%, M4 at power %4 %%",
-        "args0": [{
-            "type": "input_value",
-            "name": "speed1",
-        }, {
-            "type": "input_value",
-            "name": "speed2",
-        }, {
-            "type": "input_value",
-            "name": "speed3",
-        }, {
-            "type": "input_value",
-            "name": "speed4",
-        }],
+        "message0": "M1 at power %1 %% , M2 at power %2 %%",
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "speed1"
+            },
+            {
+                "type": "input_value",
+                "name": "speed2"
+            }
+        ],
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
@@ -191,22 +156,9 @@ Blockly.defineBlocksWithJsonArray([
         "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#205388",
+        "colour": "#00AA00",
         "tooltip": "",
         "helpUrl": ""
     },
-    {
-        "type": "motor_set_pwm",
-        "message0": "Set PWM Motor %1 Hz",
-        "args0": [{
-            "type": "input_value",
-            "name": "freq",
-        }],
-        "inputsInline": true,
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#205388",
-        "tooltip": "",
-        "helpUrl": ""
-    },
+
 ]);

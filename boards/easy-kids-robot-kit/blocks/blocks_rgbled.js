@@ -1,5 +1,4 @@
-Blockly.defineBlocksWithJsonArray(
-[
+Blockly.defineBlocksWithJsonArray([
 {
   "type": "rgbled_set_color",
   "message0": "RGBLED %1 number %2 set color %3",
@@ -8,8 +7,8 @@ Blockly.defineBlocksWithJsonArray(
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
+      
       ]
     },
     {
@@ -22,12 +21,12 @@ Blockly.defineBlocksWithJsonArray(
       "name": "color",
       "check": "Colour",
       "align": "RIGHT"
-    },
+    }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -39,8 +38,7 @@ Blockly.defineBlocksWithJsonArray(
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
       ]
     },
     {
@@ -48,12 +46,12 @@ Blockly.defineBlocksWithJsonArray(
       "name": "color",
       "check": "Colour",
       "align": "RIGHT"
-    },
+    }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -65,15 +63,14 @@ Blockly.defineBlocksWithJsonArray(
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
       ]
     }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -85,15 +82,14 @@ Blockly.defineBlocksWithJsonArray(
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
       ]
     }
   ],
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
 },
@@ -105,8 +101,7 @@ Blockly.defineBlocksWithJsonArray(
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
       ]
     },
     {
@@ -118,20 +113,19 @@ Blockly.defineBlocksWithJsonArray(
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
 },
 {
   "type": "rgbled_set_brightness",
-  "message0": "RGBLED %1 set brightness %2 %%",
+  "message0": "RGBLED %1 set brightness %2 %",
   "args0": [
     {
       "type": "field_dropdown",
       "name": "pin",
       "options": [
-          ["Board", "board"],
-          ["Car", "car"],
+        ["MBXFace", "front"]
       ]
     },
     {
@@ -143,8 +137,8 @@ Blockly.defineBlocksWithJsonArray(
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
-  "colour": "#058863",
+  "colour": "#c22121",
   "tooltip": "",
   "helpUrl": ""
-}]
-);
+}
+]);
