@@ -1,4 +1,4 @@
 [submodule "microBlock-IDE"]
 	path = microBlock-IDE
-	url = https://github.com/microBlock-IDE/microBlock-IDE
-	branch = master
+	url = https://github.com/MBXRobotics/microblock-ide-mbx-edition-version.git
+	branch = microBlock-IDE-mbx-edition
