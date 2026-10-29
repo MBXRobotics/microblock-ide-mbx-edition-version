@@ -9,6 +9,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist:win": "electron-builder --win --x64",
+    "release:win": "electron-builder --win --x64 --publish always",
     "dist:mac": "chmod +x bin/arduino-cli/arduino-cli bin/esptool/esptool && electron-builder --mac --x64"
   },
   "repository": {
@@ -30,6 +31,7 @@
   "dependencies": {
     "bcrypt": "5.0.0",
     "dive": "0.5.0",
+    "electron-updater": "4.3.5",
     "node-disk-info": "1.1.0",
     "node-wifi": "2.0.14",
     "serialport": "9.0.1"
@@ -37,7 +39,16 @@
   "build": {
     "appId": "com.microblock.mbx",
     "productName": "Microblock IDE (MBX Edition)",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "MBXRobotics",
+        "repo": "microblock-ide-mbx-edition-version",
+        "releaseType": "release"
+      }
+    ],
     "asar": false,
+    "npmRebuild": false,
     "files": [
       "!Arduino/*"
     ],

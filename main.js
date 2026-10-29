@@ -98,7 +98,56 @@ ipcMain.on("show-dashboard", (event) => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+    createWindow();
+    setupAutoUpdate();
+});
+
+// ===== Auto update (installed app only) =====
+// Checks GitHub Releases of MBXRobotics/microblock-ide-mbx-edition-version
+// (see "publish" in package.json), downloads in the background and asks
+// the user to restart. No internet = silently skipped.
+function setupAutoUpdate() {
+    if (!app.isPackaged) return; // not when running with "npm start"
+
+    let autoUpdater;
+    try {
+        autoUpdater = require('electron-updater').autoUpdater;
+    } catch (e) {
+        console.log('auto update not available:', e.message);
+        return;
+    }
+    const { dialog } = require('electron');
+
+    autoUpdater.autoDownload = true;
+    autoUpdater.autoInstallOnAppQuit = true;
+
+    autoUpdater.on('error', (err) => {
+        console.log('auto update error:', err ? err.message : err);
+    });
+
+    autoUpdater.on('update-downloaded', (info) => {
+        const win = global.sharedObj.mainWin;
+        dialog.showMessageBox(win, {
+            type: 'info',
+            buttons: ['Restart now', 'Later'],
+            defaultId: 0,
+            cancelId: 1,
+            title: 'Update ready',
+            message: `A new version (${info.version}) of Microblock IDE (MBX Edition) is ready.`,
+            detail: 'Restart now to install it, or it will be installed when you close the app.'
+        }).then((r) => {
+            if (r.response === 0) {
+                setImmediate(() => autoUpdater.quitAndInstall());
+            }
+        });
+    });
+
+    // check a few seconds after start, so the app opens fast
+    setTimeout(() => {
+        autoUpdater.checkForUpdates().catch((e) => console.log('auto update check failed:', e.message));
+    }, 5000);
+}
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
