@@ -4,6 +4,14 @@ var ipcMain = require('electron').ipcMain;
 
 app.allowRendererProcessReuse = false;
 
+// macOS/Linux: make sure bundled tools are executable (permissions can be lost when files are copied from Windows)
+if (process.platform !== 'win32') {
+    const fs = require('fs');
+    for (const tool of ['arduino-cli/arduino-cli', 'arduino-cli/arduino-cli-ubuntu-x64', 'esptool/esptool', 'esptool/esptool-ubuntu-x64']) {
+        try { fs.chmodSync(path.join(__dirname, 'bin', tool), 0o755); } catch (e) { }
+    }
+}
+
 // app.setPath('userData', path.join(__dirname, 'userData'));
 // process.env.MBLOCK_BOARDS = path.join(__dirname, 'microBlock-IDE', 'boards');
 // process.env.MBLOCK_ROOT = path.join(__dirname, 'microBlock-IDE');

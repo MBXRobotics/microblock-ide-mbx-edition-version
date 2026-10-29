@@ -7,7 +7,9 @@
     "start": "electron .",
     "install": "electron-rebuild -f -w \"wifi-control\"",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win --x64",
+    "dist:mac": "chmod +x bin/arduino-cli/arduino-cli bin/esptool/esptool && electron-builder --mac --x64"
   },
   "repository": {
     "type": "git",
@@ -54,8 +56,18 @@
     },
     "mac": {
       "category": "public.app-category.developer-tools",
-      "target": "default",
-      "icon": "build/favicon.icns"
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/favicon.icns",
+      "identity": null,
+      "hardenedRuntime": false,
+      "artifactName": "Microblock-IDE-MBX-Edition-${version}-mac-x64.${ext}"
     },
     "linux": {
       "target": "AppImage",
