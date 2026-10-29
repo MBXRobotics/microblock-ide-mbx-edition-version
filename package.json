@@ -1,6 +1,6 @@
 {
   "name": "mblock-mbx",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Microblock IDE (MBX Edition) - offline version",
   "main": "main.js",
   "scripts": {
